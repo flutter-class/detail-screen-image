@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../model/user.dart';
-import '../ui/register.dart';
-import '../ui/home.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import '../ui/login.dart';
 
-class Login extends StatefulWidget{
+class Register extends StatefulWidget{
+
   @override
-  State<StatefulWidget> createState() => LoginState();
+  State<StatefulWidget> createState() => RegisterState();
 
 }
 
-class LoginState extends State<Login>{
+class RegisterState extends State<Register>{
 
   TextEditingController _userNameController=TextEditingController();
   TextEditingController _passwordController=TextEditingController();
-  static var defaultUser =  User('admin','admin');
 
   void _onLogin(){
     setState(() {
@@ -37,7 +35,8 @@ class LoginState extends State<Login>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+
+      body: Container(
         child: ListView(
           children: <Widget>[
             Container(
@@ -64,7 +63,7 @@ class LoginState extends State<Login>{
                     alignment: Alignment.bottomRight,
                     child: Padding(padding: const EdgeInsets.only(right: 32.0,top: 32.0),
                     child: Text(
-                      'Login',
+                      'Create new account',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22.0,
@@ -84,18 +83,8 @@ class LoginState extends State<Login>{
                 children: <Widget>[
                   _customTextField(_userNameController,hint:"email",icon:Icons.email,obscureText: false),
                   _customTextField(_passwordController,hint: 'password',icon: Icons.vpn_key,obscureText: true),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width/8),
-                      child: InkWell(
-                        onTap: ()=> debugPrint('forgot password'),
-                        child: Container(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text('Forgot password?'),
-                      ),),
-                    ),
-                  ),
+                  _customTextField(_passwordController,hint: 're-type password',icon: Icons.vpn_key,obscureText: true),
+
                 ],
               ),
             ),
@@ -103,27 +92,19 @@ class LoginState extends State<Login>{
               alignment: Alignment.center,
               child: Container(
                 margin: EdgeInsets.only(top: 30.0),
-                child: _customButton('Login',(){
-
-                  var user=User(_userNameController.value.text,_passwordController.value.text);
-                  if(user.name==defaultUser.name && user.password==defaultUser.password)
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Home(user)));
-                  else
-                    Fluttertoast.showToast(msg: 'wrong user passowrd.',);
-                }),
+                child: _customButton('Continue',_onLogin),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Don\'t have an account?'),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Register()));
+                    Navigator.pop(context);
                   },
                   child: Container(
                     padding: EdgeInsets.only(left: 4,right: 12,top: 12 , bottom: 12),
-                    child: Text('Register',style:  TextStyle(color: Color(0xFFc6a700)),),
+                    child: Text('Use existing account.',),
                   ),
                 )
               ],
@@ -185,7 +166,4 @@ class LoginState extends State<Login>{
       ),
     );
   }
-
-
-
 }

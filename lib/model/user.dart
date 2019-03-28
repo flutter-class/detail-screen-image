@@ -3,5 +3,5 @@ class User{
   String name;
   String password;
 
-  User(this.id,this.name,this.password);
+  User(this.name,this.password);
 }

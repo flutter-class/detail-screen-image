@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import '../widget/tab_box.dart';
 import '../ui/login.dart';
+import '../model/user.dart';
+
 import 'package:flutter/services.dart' show rootBundle;
 
 class Home extends StatelessWidget {
+  User _sser;
+  Home(this_user);
   @override
   Widget build(BuildContext context) {
     Color color = Colors.blueAccent.shade700;
